@@ -7,13 +7,19 @@ function App() {
       let [counter,setCounter]=useState(15)
   // let counter=15;
   const addValue=()=>{
-    console.log("value added",counter);
     counter=counter + 1;
     setCounter(counter)
+    
   }
   const decValue=()=>{
-    setCounter(counter-1)
+    
+    if (counter===0) {
+      alert("Can't Decrease. The value is zero")
+    }else{
+      setCounter(counter-1)
+    }
   }
+  
 
   return (
     <>
@@ -21,12 +27,11 @@ function App() {
       <h2>Counter Value: {counter}</h2>
 
       <button onClick={addValue}
-      >Add Value{counter}</button>
+      >Add Value</button>
       <br /><br />
       <button
         onClick={decValue}
-      >Decrease Value{counter}</button>
-      <p>Footer{counter}</p>
+      >Decrease Value</button>
     </>
   )
 }

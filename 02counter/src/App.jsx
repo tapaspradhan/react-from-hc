@@ -13,8 +13,8 @@ function App() {
   }
   const decValue=()=>{
     
-    if (counter===0) {
-      alert("Can't Decrease. The value is zero")
+    if(counter===0){
+      alert("Can't negative value")
     }else{
       setCounter(counter-1)
     }

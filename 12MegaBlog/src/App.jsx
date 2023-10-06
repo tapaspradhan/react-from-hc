@@ -1,22 +1,42 @@
-import { useState } from 'react'
+import { useState,useEffect } from 'react'
+import {useDispatch} from 'react-redux'
+import authService from './appWrite/auth'
+import {login,logout} from "./store/authSlice"
 
 import './App.css'
+import { Footer, Header } from './components'
+import {Outlet} from 'react-router-dom'
 
 function App() {
-  console.log(import.meta.VITE_APPWRITE_URL);
+  const [loading,setLoding]=useState(true)
+  const dispatch=useDispatch()
 
-  return (
-    <>
-    <div className="w-full bg-orange-700 w-100%">
-      <h1 className="text-3xl block  text-white ">Creating A Blog Posting Website</h1>
+  useEffect(() => {
+    authService.getCurrentUser()
+    .then((userData)=>{
+      if(userData){
+        dispatch(login({userData}))
+      }else{
+        dispatch(logout())
+      }
+    })
+    .finally(()=>{
+      setLoding(false)
+    })
+  }, [])
+  
 
+  return !loading ? (
+    <div className='min-h-screen flex-wrap flex content-between'>
+      <div className='w-full block'>
+        <Header/>
+        <main>
+          TODO: <Outlet/>
+        </main>
+        <Footer/>
+      </div>
     </div>
-    <div className="w-full bg-orange-700 w-100%">
-      <h1 className="text-3xl block  text-white ">Creating A Blog Posting Website</h1>
-
-    </div>
-    </>
-  )
+  ) : null
 }
 
 export default App
